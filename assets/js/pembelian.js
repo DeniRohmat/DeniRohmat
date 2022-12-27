@@ -153,45 +153,7 @@ function deleteTiket(id) {
   dataTiket.splice(id, 1);
   showDataTiket();
 }
-function bayar(id) {
-  Swal.fire({
-    title: "Apa anda yakin akan membeli tiket?",
-    text: "Tiket yang sudah di beli tidak dapat dikembalikan",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "Bayar",
-    confirmButtonColor: "#3085d6",
-    cancelButtonText: "Batal",
-    cancelButtonColor: "#d33",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire("proses");
-      Swal.showLoading();
-      $.ajax({
-        type: "GET",
-        url: "http://localhost/api_toko_online/produk/bayar/" + id,
-        dataType: "JSON",
-        success: function (response) {
-          if (response.status) {
-            Swal.fire({
-              text: response.message,
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-            fetching_data();
-            $("#md-dialog").modal("hide");
-          } else {
-            Swal.fire({
-              text: response.message,
-              icon: "error",
-              confirmButtonText: "Ok",
-            });
-          }
-        },
-      });
-    }
-  });
-}
+
 
 function formatRupiah(angka, prefix) {
   let number_string = angka.toString(),
