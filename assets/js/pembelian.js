@@ -57,7 +57,6 @@ function showDataTiket() {
             <div class="flex space-x-3 justify-end print:hidden">
                 ${btnEdit}
                 ${btnHapus}
-                ${bayar}
             </div>
         </div>`;
     }
