@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>App Tiket Konser Online</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/navigation.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/shimmer.css" />
+    <link rel="stylesheet" type="image" href="assets/images/tiket.png" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700" rel="stylesheet" />
+    <link rel="manifest" href="manifest.json" />
+  </head>
+
+  <body class="align-items-start pt-0 flex-column">
+    <main role="main" class="container-fluid col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 pt-0 pl-0 pr-0">
+      <div id="content"></div>
+    </main>
+
+    <!-- start content footer -->
+    <footer class="container-footer w-100 mb-4 p-3 flex-row justify-content-center col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 m-auto"></footer>
+
+    <!-- start navigation bottom -->
+    <nav class="navbar bottom-nav fixed-bottom navbar-expand bg-white shadow-sm col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 text-center m-auto">
+      <button class="btn" onclick="mdOpen();">
+      </button>
+
+      <div class="bottom-nav-item" id="home" onclick="home();">
+        <div class="bottom-nav-link">
+          <p>
+            <i class="fi fi-rr-home unselected"></i>
+            <i class="fi fi-sr-home selected"></i>
+          </p>
+          <span>Beranda</span>
+        </div>
+      </div>
+     
+
+      </div>
+
+      <div class="bottom-nav-item" id="profil" onclick="profil();">
+        <div class="bottom-nav-link">
+          <p>
+            <i class="fi fi-rr-shopping-cart unselected"></i>
+            <i class="fi fi-sr-shopping-cart selected"></i>
+          </p>
+          <span>Pembelian Tiket</span>
+          </div>
+          </div>
+          <div class="bottom-nav-item " id="proses" onclick="proses();">
+            <div class="bottom-nav-link">
+              <p>
+                <i class="fi fi-rr-comment-user unselected"></i>
+                <i class="fi fi-rr-comment-user selected"></i>
+              </p>
+              <span>Profile</span>
+              </div>
+              </div>
+              </div>
+
+    </nav>
+
+    <!-- end navigation bottom -->
+
+
+    <script src="assets/js/jquery-3.6.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/register.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/pembelian.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js"></script>
+    <script>
+      const myLazyLoad = new LazyLoad({
+        elements_selector: ".poto",
+      });
+    </script>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
+      import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-messaging.js";
+
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyDlBjZvdOmInGGtt6AIBZUtW5RR_TCsvLI",
+        authDomain: "toko-online-1e208.firebaseapp.com",
+        projectId: "toko-online-1e208",
+        storageBucket: "toko-online-1e208.appspot.com",
+        messagingSenderId: "966597814584",
+        appId: "1:966597814584:web:6b3ea9d9f884d9bf9339cd",
+        measurementId: "G-9R71L427LQ",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const messaging = getMessaging();
+      getToken(messaging, { vapidKey: "BGScl6KxBLWId7L5wYdZ0SilSeMuMnlapX-d9YlNnhJOUKwXP_jMhbvaFgDmgFyPRCupb6BkTPQ7ts8dFsT6Xsw" })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log(currentToken);
+            // Send the token to your server and update the UI if
+            necessary;
+            // ...
+          } else {
+            // Show permission request UI
+            console.log("No registration token available. Request permission to generate one.");
+            // ...
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token.", err);
+          // ...
+        });
+      onMessage(messaging, (payload) => {
+        const notificationOption = {
+          body: payload.notification.body,
+          icon: payload.notification.icon,
+        };
+        if (Notification.permission === "granted") {
+          var notification = new Notification(payload.notification.title, notificationOption);
+          notification.onclick = function (ev) {
+            ev.preventDefault();
+            window.open("index.html", "_blank");
+            notification.close();
+          };
+        }
+      });
+    </script>
+  </body>
+</html>
